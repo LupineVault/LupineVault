@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lupine RED Login</title>
+    <script defer src="/_a/js/redex/lstimer.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous" />
+    <style>
+      :root {
+        --accent-color: #ed1d26;
+        --dark-bg: #121212;
+        --card-bg: rgba(32, 32, 36, 0.85);
+        --text-primary: #f8f9fa;
+        --text-secondary: #b0b0b0;
+        --border-radius: 16px;
+      }
+
+      body, html {
+        background-color: var(--dark-bg);
+        color: var(--text-primary);
+        height: 100%;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+      }
+
+      a {
+        color: var(--accent-color);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #ff4250;
+      }
+
+      .background-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .background-radial-gradient {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(40deg, #0f0f11, #232333);
+      }
+
+      .background-radial-gradient::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 50%;
+        height: 100%;
+        background: radial-gradient(
+          circle at center,
+          rgba(255, 58, 94, 0.2) 0%,
+          transparent 70%
+        );
+      }
+
+      #radius-shape-1 {
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        top: -100px;
+        left: -130px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 58, 94, 0.8),
+          transparent 70%
+        );
+        z-index: 1;
+        filter: blur(40px);
+      }
+
+      #radius-shape-2 {
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        bottom: -80px;
+        right: -50px;
+        background: radial-gradient(
+          circle,
+          rgba(255, 58, 94, 0.4),
+          transparent 70%
+        );
+        z-index: 1;
+        filter: blur(30px);
+      }
+
+      canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        pointer-events: none;
+      }
+
+      .login-container {
+        position: relative;
+        z-index: 10;
+        max-width: 400px;
+        width: 100%;
+        margin: auto;
+        text-align: center;
+      }
+
+      .card.bg-glass {
+        background: var(--card-bg);
+        backdrop-filter: blur(15px);
+        border-radius: var(--border-radius);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+        padding: 40px;
+      }
+
+      .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 12px;
+        color: var(--text-primary);
+        padding: 12px 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+        box-shadow: 0 0 0 2px var(--accent-color);
+      }
+
+      .btn-primary {
+        background-color: var(--accent-color);
+        border-radius: 12px;
+        padding: 12px;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(255, 58, 94, 0.4);
+        transition: all 0.3s ease;
+      }
+
+      .btn-primary:hover {
+        background-color: #c70000;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 58, 94, 0.6);
+      }
+
+      h1 {
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        font-weight: bold;
+      }
+
+      .accent-text {
+        color: var(--accent-color);
+        font-weight: bold;
+      }
+    </style>
+     </head>
+     <body>
+       <div class="background-container">
+         <div class="background-radial-gradient"></div>
+         <canvas id="staticStars"></canvas>
+         <canvas id="movingStars"></canvas>
+         <div id="radius-shape-1"></div>
+         <div id="radius-shape-2"></div>
+       </div>
+   
+       <section class="d-flex align-items-center justify-content-center min-vh-100">
+         <div class="login-container">
+           <h1 class="mb-4">
+             Free yourself on <span class="accent-text">RED</span>
+           </h1>
+   
+           <div class="card bg-glass">
+             <div class="card-body">
+               <form>
+                 <div class="form-outline mb-4">
+                   <input type="email" id="email" class="form-control" placeholder=" " />
+                   <label class="form-label" for="email">Username / Email</label>
+                 </div>
+   
+                 <div class="form-outline mb-4">
+                   <input type="password" id="password" class="form-control" placeholder=" " />
+                   <label class="form-label" for="password">Password</label>
+                 </div>
+   
+                 <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+               </form>
+               <p class="text-secondary small">
+                 By using Lupine RED, you agree to our
+                 <a href="/legal/privacy">Privacy Policy</a> and
+                 <a href="/legal/terms">Terms of Service</a>.
+               </p>
+             </div>
+           </div>
+         </div>
+       </section>
+   
+       <script>
+         function createStars(canvas, count, moving = false) {
+           const ctx = canvas.getContext("2d");
+           const stars = [];
+           const w = (canvas.width = window.innerWidth);
+           const h = (canvas.height = window.innerHeight);
+           for (let i = 0; i < count; i++) {
+          stars.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            size: Math.random() * 2 + 1,
+            opacity: Math.random() * 0.5 + 0.5,
+          });
+        }
+
+        function draw() {
+          ctx.clearRect(0, 0, w, h);
+          stars.forEach((star) => {
+            ctx.beginPath();
+            ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(237, 29, 38, ${star.opacity})`;
+            ctx.shadowBlur = 10;
+            ctx.shadowColor = "red";
+            ctx.fill();
+          });
+        }
+
+        if (moving) {
+          window.addEventListener("mousemove", (e) => {
+            stars.forEach((star) => {
+              star.x += (e.clientX / w - 0.5) * 5;
+              star.y += (e.clientY / h - 0.5) * 5;
+            });
+            draw();
+          });
+        }
+
+        draw();
+      }
+
+      createStars(document.getElementById("staticStars"), 150);
+    </script>
+  </body>
+</html>
+<!--GOD DAMN I WAS LAGGY WHILE TYPING THIS SHIIII-->
